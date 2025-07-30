@@ -82,9 +82,30 @@
     transform: scale(1.05);
 }
 
-/* Duration container placeholder */
-.duration-container {
-    margin-top: 40px;
-    font-size: 1.2rem;
-    color: #444;
+
+.session-container {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 500px;
+  font-family: sans-serif;
 }
+
+
+.session-details {
+  margin: 0.5rem 0;
+  font-size: 14px;
+  color: #333;
+}
+
+
+#sessions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

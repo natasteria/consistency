@@ -1,7 +1,7 @@
 const timerDisplay = document.querySelector('#timer');
 const startStopBtn = document.querySelector('#start-stop-btn');
 const resetBtn = document.querySelector('#reset');
-
+const sessionsDisplay = document.querySelector('#sessions');
 
 // don't forget that this refers to the current object instance that is assesing a method like the constructor or custom methods
 class Session {
@@ -81,6 +81,40 @@ let session = {
     formattedDuration: ''
 };
 
+function displaySessions() {
+    sessionsDisplay.innerHTML = '';
+
+    Session.allSessions.forEach((session) => {
+        const sessionContainer = document.createElement('div');
+        sessionContainer.classList.add('session-container');
+
+        const formatted = session.getFormatedSessionDetails(); 
+
+        const sessionStartDetails = document.createElement('p');
+        sessionStartDetails.textContent = `Start: ${formatted.sessionStart}`;
+        sessionStartDetails.classList.add('session-details')
+
+        const sessionEndDetails = document.createElement('p');
+        sessionEndDetails.textContent = `End: ${formatted.sessionEnd}`;
+        sessionEndDetails.classList.add('session-details')
+
+        const sessionDuration = document.createElement('p');
+        const totalSeconds = Math.floor(session.sessionDuration / 1000);
+        const hrs = Math.floor(totalSeconds / 3600);
+        const mins = Math.floor((totalSeconds % 3600) / 60);
+        const secs = totalSeconds % 60;
+        sessionDuration.textContent = `Duration: ${hrs.toString().padStart(2, '0')}:` +
+                                      `${mins.toString().padStart(2, '0')}:` +
+                                      `${secs.toString().padStart(2, '0')}`;
+        sessionDuration.classList.add('session-details');
+
+        sessionContainer.appendChild(sessionStartDetails);
+        sessionContainer.appendChild(sessionEndDetails);
+        sessionContainer.appendChild(sessionDuration);
+
+        sessionsDisplay.appendChild(sessionContainer);
+    });
+}
 
 
 startStopBtn.addEventListener('click', () => {
@@ -114,7 +148,7 @@ startStopBtn.addEventListener('click', () => {
 
         const studySession = new Session(session.start, session.end);
         console.log(Session.allSessions);
-        
+        displaySessions();
 
         timerDisplay.textContent = '00:00:00';        
         seconds = 0; 
