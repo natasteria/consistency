@@ -28,6 +28,31 @@
 
     <div id="sessions"></div>
 
+    <div class="hidden">
+
+        <div id="topic-overlay" class="overlay">
+            <div class="form-container">
+                <h3>Add Topic</h3>
+                
+                <label for="topic-input">Topic: </label>
+                <div>
+                    <input type="text" id="topic-input" placeholder="Topic Name">
+                </div>
+
+                <label for="summary-input">Short Summary: </label>
+                <div>
+                    <textarea id="summary-input" placeholder="Short summary"></textarea>
+                </div>
+
+                <div>
+                    <button id="save-topic-btn">Save</button>
+                    <button id="close-overlay-btn">Cancel</button>
+                </div>
+                <p id="user-message" class="message hidden"></p>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>
