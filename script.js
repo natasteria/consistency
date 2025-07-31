@@ -59,7 +59,7 @@ class Session {
         };
     }
 
-    showTopics(){
+    getTopics(){
         return this.topics;
     }
 
@@ -84,9 +84,10 @@ let session = {
 function displaySessions() {
     sessionsDisplay.innerHTML = '';
 
-    Session.allSessions.forEach((session) => {
+    Session.allSessions.forEach((session, index) => {
         const sessionContainer = document.createElement('div');
         sessionContainer.classList.add('session-container');
+        sessionContainer.dataset.sessionIndex = index;
 
         const formatted = session.getFormatedSessionDetails(); 
 
@@ -108,13 +109,98 @@ function displaySessions() {
                                       `${secs.toString().padStart(2, '0')}`;
         sessionDuration.classList.add('session-details');
 
+        const addTopicBtn = document.createElement('button');
+        addTopicBtn.textContent = "Add Topic";
+        addTopicBtn.addEventListener('click', addTopicBtnHandler); 
+
+        const topicsContainer = document.createElement('div');
+        topicsContainer.classList.add('topics-container');
+        
+        sessionTopics = session.getTopics();
+        console.log(sessionTopics);
+        if(sessionTopics.length === 0){
+            const message = document.createElement('p');
+            message.textContent =  "No Notes Yet!";
+            message.classList.add('empty-topic-message');
+            topicsContainer.appendChild(message);
+        }
+        else{
+            sessionTopics.forEach( (topic) => {
+                const topicTitle = document.createElement('p');
+                topicTitle.textContent = topic.title;
+                topicTitle.classList.add('topic-title');
+                const topicSummary = document.createElement('p');
+                topicSummary.textContent = topic.summary;
+                topicSummary.classList.add('topics-summary')
+                
+                topicsContainer.appendChild(topicTitle);
+                topicsContainer.appendChild(topicSummary);
+            })
+        }
+
         sessionContainer.appendChild(sessionStartDetails);
         sessionContainer.appendChild(sessionEndDetails);
         sessionContainer.appendChild(sessionDuration);
+        sessionContainer.appendChild(topicsContainer)
+        sessionContainer.appendChild(addTopicBtn);
+        
 
         sessionsDisplay.appendChild(sessionContainer);
+
     });
 }
+
+let currentSessionIndex = null;
+
+const overlayWrapper = document.querySelector('.hidden');
+const closeOverlayBtn = document.querySelector('#close-overlay-btn');
+const overlay = document.querySelector('#topic-overlay');
+overlay.addEventListener('click', closeOverlay);
+closeOverlayBtn.addEventListener('click', closeOverlay);
+
+function closeOverlay(e){
+    const clickedOutsideForm = !e.target.closest('.form-container');
+
+    if(e.target.id === 'close-overlay-btn' || clickedOutsideForm){
+        overlayWrapper.classList.add('hidden');
+    }
+}
+
+const saveTopicBtn = document.querySelector('#save-topic-btn');
+const userMessage = document.querySelector('#user-message');
+
+saveTopicBtn.addEventListener('click', () => {
+    const topic = document.querySelector('#topic-input').value;
+    const summary = document.querySelector('#summary-input').value;
+
+    if (currentSessionIndex !== null && topic !== "" && summary !== "") {
+        Session.allSessions[currentSessionIndex].addTopic(topic, summary);
+        overlayWrapper.classList.add('hidden');
+
+        console.log(Session.allSessions[currentSessionIndex].sessionDetails());
+
+        document.querySelector('#topic-input').value = '';
+        document.querySelector('#summary-input').value = '';    
+
+        displaySessions();
+    }else{
+        userMessage.textContent = "Please fill in both Topic and Summary.";
+        userMessage.classList.remove('hidden');
+    }
+});
+
+
+function addTopicBtnHandler(e){
+    const selectedSession = e.target.closest('.session-container');
+    currentSessionIndex = selectedSession.dataset.sessionIndex;
+
+    overlayWrapper.classList.remove('hidden');
+    
+    
+}
+
+
+
 
 
 startStopBtn.addEventListener('click', () => {
@@ -147,7 +233,7 @@ startStopBtn.addEventListener('click', () => {
         session.end = new Date();
 
         const studySession = new Session(session.start, session.end);
-        console.log(Session.allSessions);
+        
         displaySessions();
 
         timerDisplay.textContent = '00:00:00';        
