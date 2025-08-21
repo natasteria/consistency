@@ -1,0 +1,154 @@
+.session-container {
+    width: 600px;
+    height: 400px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    position: relative;
+    margin-top: 15px;
+}
+
+.session-header {
+    display: flex;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    padding: 16px 20px;
+    border-radius: 12px 12px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.empty-list{
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.header-cell {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-cell:last-child {
+    flex: 0.8;
+}
+
+.session-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.session-row:hover {
+    background-color: #f8f9fa;
+}
+
+.session-row:last-child {
+    border-bottom: none;
+}
+
+.session-cell {
+    flex: 1;
+    text-align: center;
+    padding: 0 8px;
+}
+
+.session-cell:last-child {
+    flex: 0.8;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.time-main {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 4px;
+}
+
+.date-sub {
+    font-size: 12px;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.duration-main {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.title-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.title-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.note-btn {
+    background: #ecf0f1;
+    color: #2c3e50;
+    border: 1px solid #bdc3c7;
+}
+
+.note-btn:hover {
+    background: #d5dbdb;
+    transform: translateY(-1px);
+}
+
+/* Custom scrollbar for the container */
+.session-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.session-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.session-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.session-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
